@@ -342,6 +342,14 @@
         tags: ovs-dpdk,
         when: "(enable_openvswitch | bool) and (enable_ovs_dpdk | bool)"}
 
+- name: Apply role vpp
+  hosts:
+    - vpp
+  roles:
+    - { role: vpp,
+        tags: vpp,
+        when: enable_vpp | bool }
+
 - name: Apply nova-hyperv role
   gather_facts: false
   hosts:
@@ -363,6 +371,7 @@
     - neutron-lbaas-agent
     - neutron-metadata-agent
     - neutron-vpnaas-agent
+    - neutron-vpp-agent
     - compute
     - manila-share
   serial: '{{ serial|default("0") }}'

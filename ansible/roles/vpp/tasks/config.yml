@@ -1,0 +1,51 @@
+---
+- name: Ensuring config directories exist
+  file:
+    path: "{{ node_config_directory }}/{{ item.key }}"
+    state: "directory"
+    recurse: yes
+  when:
+    - item.value.enabled | bool
+    - item.value.host_in_groups | bool
+  with_dict: "{{ vpp_services }}"
+
+- name: Copying over config.json files for services
+  template:
+    src: "vpp.json.j2"
+    dest: "{{ node_config_directory }}/{{ item.key }}/config.json"
+  register: vpp_config_jsons
+  when:
+    - item.value.enabled | bool
+    - item.value.host_in_groups | bool
+  with_dict: "{{ vpp_services }}"
+  notify:
+    - "Restart {{ item.key }} container"
+
+- name: Copying over startup.conf files for services
+  template:
+    src: "startup.conf"
+    dest: "{{ node_config_directory }}/{{ item.key }}/startup.conf"
+  register: vpp_config_jsons
+  when:
+    - item.value.enabled | bool
+    - item.value.host_in_groups | bool
+  with_dict: "{{ vpp_services }}"
+  notify:
+    - "Restart {{ item.key }} container"
+
+- name: Check vpp containers
+  kolla_docker:
+    action: "compare_container"
+    common_options: "{{ docker_common_options }}"
+    name: "{{ item.value.container_name }}"
+    image: "{{ item.value.image }}"
+    privileged: "{{ item.value.privileged | default(False) }}"
+    volumes: "{{ item.value.volumes }}"
+  register: check_vpp_containers
+  when:
+    - action != "config"
+    - item.value.enabled | bool
+    - item.value.host_in_groups | bool
+  with_dict: "{{ vpp_services }}"
+  notify:
+    - "Restart {{ item.key }} container"

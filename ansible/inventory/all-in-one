@@ -103,6 +103,10 @@ network
 compute
 manila-share
 
+[vpp:children]
+network
+control
+
 [opendaylight:children]
 network
 
@@ -275,6 +279,11 @@ neutron
 
 [neutron-vpnaas-agent:children]
 neutron
+
+[neutron-vpp-agent:children]
+network
+control
+compute
 
 [neutron-bgp-dragent:children]
 neutron
