@@ -1,0 +1,7 @@
+---
+- name: Get container facts
+  kolla_container_facts:
+    name:
+      - vpp
+  register: container_facts
+

@@ -26,7 +26,7 @@ metadata_proxy_socket = /var/lib/neutron/kolla/metadata_proxy
 
 {% if neutron_plugin_agent == "openvswitch" or neutron_plugin_agent == "opendaylight" %}
 interface_driver = openvswitch
-{% elif neutron_plugin_agent == "linuxbridge" %}
+{% elif neutron_plugin_agent == "linuxbridge" or neutron_plugin_agent == "vpp" %}
 interface_driver = linuxbridge
 {% endif %}
 

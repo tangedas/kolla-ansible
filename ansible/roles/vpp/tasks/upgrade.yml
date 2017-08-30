@@ -1,0 +1,6 @@
+---
+- include: config.yml
+
+- name: Flush Handlers
+  meta: flush_handlers
+

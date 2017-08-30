@@ -122,8 +122,8 @@ bifrost_network_interface: "{{ network_interface }}"
 dns_interface: "{{ network_interface }}"
 tunnel_interface_address: "{{ hostvars[inventory_hostname]['ansible_' + tunnel_interface]['ipv4']['address'] }}"
 
-# Valid options are [ openvswitch, linuxbridge, vmware_nsxv, vmware_dvs, opendaylight ]
-neutron_plugin_agent: "openvswitch"
+# Valid options are [ openvswitch, linuxbridge, vmware_nsxv, vmware_dvs, opendaylight, vpp ]
+neutron_plugin_agent: "vpp"
 
 # The default ports used by each service.
 # The list should be in alphabetical order
@@ -405,6 +405,7 @@ enable_telegraf: "no"
 enable_tempest: "no"
 enable_trove: "no"
 enable_vmtp: "no"
+enable_vpp: "{{ neutron_plugin_agent == 'vpp' | bool }}"
 enable_watcher: "no"
 enable_zun: "no"
 
