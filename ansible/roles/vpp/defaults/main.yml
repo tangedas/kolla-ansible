@@ -20,6 +20,7 @@ vpp_services:
       - "/etc/localtime:/etc/localtime:ro"
       - "/run:/run:shared"
       - "kolla_logs:/var/log/kolla/"
+      - "/dev/hugepages:/dev/hugepages:rw"
 
 ####################
 # Docker
