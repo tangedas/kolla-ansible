@@ -40,6 +40,33 @@ neutron_services:
       - "/lib/modules:/lib/modules:ro"
       - "/run:/run:shared"
       - "kolla_logs:/var/log/kolla/"
+  neutron-vpp-agent:
+    container_name: "neutron_vpp_agent"
+    image: "{{ neutron_vpp_agent_image_full }}"
+    enabled: "{{ neutron_plugin_agent == 'vpp' }}"
+    privileged: True
+    host_in_groups: >-
+      {{
+      ( inventory_hostname in groups['compute']
+      or inventory_hostname in groups['neutron-dhcp-agent']
+      or inventory_hostname in groups['neutron-l3-agent']
+      or inventory_hostname in groups['neutron-metadata-agent']
+      or inventory_hostname in groups['neutron-vpnaas-agent']
+      and not enable_nova_fake | bool
+      ) or
+      ( inventory_hostname in groups['neutron-dhcp-agent']
+      or inventory_hostname in groups['neutron-l3-agent']
+      or inventory_hostname in groups['neutron-metadata-agent']
+      or inventory_hostname in groups['neutron-vpnaas-agent']
+      and enable_nova_fake | bool
+      )
+      }}
+    volumes:
+      - "{{ node_config_directory }}/neutron-vpp-agent/:{{ container_config_directory }}/:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/lib/modules:/lib/modules:ro"
+      - "/run:/run:shared"
+      - "kolla_logs:/var/log/kolla/"
   neutron-linuxbridge-agent:
     container_name: "neutron_linuxbridge_agent"
     image: "{{  neutron_linuxbridge_agent_image_full }}"
