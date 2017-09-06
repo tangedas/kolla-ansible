@@ -21,6 +21,8 @@ vpp_services:
       - "/run:/run:shared"
       - "kolla_logs:/var/log/kolla/"
       - "/dev/hugepages:/dev/hugepages:rw"
+      - "/dev/vfio:/dev/vfio:ro"
+      - "/lib/modules:/lib/modules:ro"
 
 ####################
 # Docker
