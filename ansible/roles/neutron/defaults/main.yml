@@ -67,7 +67,7 @@ neutron_services:
       - "/lib/modules:/lib/modules:ro"
       - "/run:/run:shared"
       - "kolla_logs:/var/log/kolla/"
-    neutron-linuxbridge-agent:
+  neutron-linuxbridge-agent:
     container_name: "neutron_linuxbridge_agent"
     image: "{{  neutron_linuxbridge_agent_image_full }}"
     privileged: True
