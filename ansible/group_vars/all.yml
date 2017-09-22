@@ -412,7 +412,7 @@ enable_telegraf: "no"
 enable_tempest: "no"
 enable_trove: "no"
 enable_vmtp: "no"
-enable_vpp: "{{ neutron_plugin_agent == 'vpp' | bool }}"
+enable_vpp: "no"
 enable_watcher: "no"
 enable_zun: "no"
 

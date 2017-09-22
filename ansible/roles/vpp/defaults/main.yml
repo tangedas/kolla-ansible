@@ -7,22 +7,15 @@ vpp_services:
     image: "{{ vpp_image_full }}"
     enabled: "{{ enable_vpp }}"
     group: vpp
-    host_in_groups: >-
-      {{
-      inventory_hostname in groups['compute']
-      or inventory_hostname in groups['neutron-dhcp-agent']
-      or inventory_hostname in groups['neutron-l3-agent']
-      or inventory_hostname in groups['neutron-metadata-agent']
-      or inventory_hostname in groups['neutron-vpnaas-agent']
-      }}
+    privileged: True
+    host_in_groups: "{{ inventory_hostname in groups['vpp'] }}"
     volumes:
       - "{{ node_config_directory }}/vpp/:{{ container_config_directory }}/:ro"
       - "/etc/localtime:/etc/localtime:ro"
-      - "/run:/run:shared"
       - "kolla_logs:/var/log/kolla/"
-      - "/dev/hugepages:/dev/hugepages:rw"
-      - "/dev/vfio:/dev/vfio:ro"
       - "/lib/modules:/lib/modules:ro"
+      - "/dev:/dev:rw,rshared"
+      - "/run:/run:rw,rshared"
 
 ####################
 # Docker
