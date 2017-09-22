@@ -350,6 +350,14 @@
         tags: vpp,
         when: enable_vpp | bool }
 
+- name: Apply role vpp
+  hosts:
+    - vpp
+  roles:
+    - { role: vpp,
+        tags: vpp,
+        when: enable_vpp | bool }
+
 - name: Apply nova-hyperv role
   gather_facts: false
   hosts:
