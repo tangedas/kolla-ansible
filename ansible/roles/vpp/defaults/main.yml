@@ -14,8 +14,9 @@ vpp_services:
       - "/etc/localtime:/etc/localtime:ro"
       - "kolla_logs:/var/log/kolla/"
       - "/lib/modules:/lib/modules:ro"
-      - "/dev:/dev:rw,rshared"
-      - "/run:/run:rw,rshared"
+      - "/dev:/dev:rw"
+      - "/dev/shm:/dev/shm:rw"
+      - "/run:/run:shared"
 
 ####################
 # Docker
