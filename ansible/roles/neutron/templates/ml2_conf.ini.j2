@@ -14,8 +14,6 @@ mechanism_drivers = openvswitch,l2population
 mechanism_drivers = linuxbridge,l2population
 {% elif neutron_plugin_agent == "opendaylight" %}
 mechanism_drivers = {{ opendaylight_mechanism_driver }}
-{% elif neutron_plugin_agent == "vpp" %}
-mechanism_drivers = vpp
 {% endif %}
 
 {% if neutron_extension_drivers %}
@@ -52,23 +50,10 @@ vni_ranges = 1:1000
 vxlan_group = 239.1.1.1
 {% endif %}
 
-[ml2_vpp]
-{% if neutron_plugin_agent == "vpp" %}
-etcd_insecure_explicit_disable_https = True
-gpe_locators =
-gpe_src_cidr =
-enable_vpp_restart = False
-etcd_pass =
-etcd_user =
-etcd_port = 2379
-etcd_host = 127.0.0.1
-physnets = phystenant1:tap-0
-{% endif %}
-
 [securitygroup]
 {% if neutron_plugin_agent == "openvswitch" or neutron_plugin_agent == "opendaylight" %}
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
-{% elif neutron_plugin_agent == "linuxbridge" or neutron_plugin_agent == "vpp" %}
+{% elif neutron_plugin_agent == "linuxbridge" %}
 firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 {% endif %}
 
