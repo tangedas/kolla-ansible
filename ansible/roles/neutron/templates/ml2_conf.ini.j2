@@ -50,11 +50,13 @@ vni_ranges = 1:1000
 vxlan_group = 239.1.1.1
 {% endif %}
 
+{% if neutron_plugin_agent != "vpp" %}
 [securitygroup]
 {% if neutron_plugin_agent == "openvswitch" or neutron_plugin_agent == "opendaylight" %}
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
 {% elif neutron_plugin_agent == "linuxbridge" %}
 firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+{% endif %}
 {% endif %}
 
 {% if neutron_plugin_agent == "openvswitch" or neutron_plugin_agent == "opendaylight" %}
