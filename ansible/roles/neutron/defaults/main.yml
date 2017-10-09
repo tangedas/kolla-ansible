@@ -12,6 +12,7 @@ neutron_services:
       - "{{ node_config_directory }}/neutron-server/:{{ container_config_directory }}/:ro"
       - "/etc/localtime:/etc/localtime:ro"
       - "kolla_logs:/var/log/kolla/"
+      - "/vpp/vpp-mount:/vpp/vpp-mount:rw"
   neutron-openvswitch-agent:
     container_name: "neutron_openvswitch_agent"
     image: "{{ neutron_openvswitch_agent_image_full }}"
@@ -54,6 +55,7 @@ neutron_services:
       - "/dev/shm:/dev/shm:rw"
       - "/run:/run:shared"
       - "kolla_logs:/var/log/kolla/"
+      - "/vpp/vpp-mount:/vpp/vpp-mount:rw"
   neutron-linuxbridge-agent:
     container_name: "neutron_linuxbridge_agent"
     image: "{{  neutron_linuxbridge_agent_image_full }}"
