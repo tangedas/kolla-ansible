@@ -21,7 +21,7 @@ nova_services:
       - "nova_compute:/var/lib/nova/"
       - "{% if enable_cinder_backend_nfs | bool %}/var/lib/nova/mnt:/var/lib/nova/mnt:shared{% endif %}"
       - "nova_libvirt_qemu:/etc/libvirt/qemu"
-      - "/vpp/vpp-mount:/vpp/vpp-mount:rw"
+      - "/var/vpp-mount:/var/vpp-mount:rw"
   nova-ssh:
     container_name: "nova_ssh"
     group: "compute"
@@ -107,7 +107,7 @@ nova_services:
       - "{{ node_config_directory }}/nova-conductor/:{{ container_config_directory }}/:ro"
       - "/etc/localtime:/etc/localtime:ro"
       - "kolla_logs:/var/log/kolla/"
-      - "/vpp/vpp-mount:/vpp/vpp-mount:rw"
+      - "/var/vpp-mount:/var/vpp-mount:rw"
   nova-compute:
     container_name: "nova_compute"
     group: "compute"
@@ -125,7 +125,7 @@ nova_services:
       - "libvirtd:/var/lib/libvirt"
       - "nova_compute:/var/lib/nova/"
       - "{% if enable_cinder_backend_nfs | bool %}/var/lib/nova/mnt:/var/lib/nova/mnt:shared{% endif %}"
-      - "/vpp/vpp-mount:/vpp/vpp-mount:rw"
+      - "/var/vpp-mount:/var/vpp-mount:rw"
   nova-compute-ironic:
     container_name: "nova_compute_ironic"
     group: "nova-compute-ironic"
