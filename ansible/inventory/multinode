@@ -297,9 +297,6 @@ neutron
 [neutron-vpp-agent:children]
 compute
 
-[vpp:children]
-compute
-
 [neutron-bgp-dragent:children]
 neutron
 
